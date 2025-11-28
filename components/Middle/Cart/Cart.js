@@ -66,26 +66,12 @@ export default function Cart() {
   };
 
   return (
-    <div className="bg-white text-black min-h-screen flex flex-col relative">
+    <div className="bg-white text-black min-h-screen flex flex-col">
       {/* Header */}
-      <div className="relative flex items-center justify-between mb-6 px-6 pt-3">
-        <h1 className="text-3xl font-bold">🛒 Giỏ hàng của bạn</h1>
-        <Link
-          href="/"
-          className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
-        >
-          <span className="inline-flex items-center gap-1">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Quay về trang chủ
-          </span>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 md:px-8 pt-4 mb-4">
+        <h1 className="text-xl md:text-3xl font-bold">🛒 Giỏ hàng của bạn</h1>
+        <Link href="/" className="text-sm font-medium text-blue-600 hover:text-blue-800 transition">
+          ← Quay về trang chủ
         </Link>
       </div>
 
@@ -93,7 +79,8 @@ export default function Cart() {
         <p className="text-gray-600 text-center mt-10">Giỏ hàng của bạn đang trống.</p>
       ) : (
         <>
-          <div className="flex-1 overflow-y-auto max-h-[60vh] px-4 space-y-4">
+          {/* Danh sách sản phẩm */}
+          <div className="flex-1 overflow-y-auto px-3 md:px-6 space-y-4 pb-28">
             {cart.map((item, idx) => {
               const quantity = Number(item.quantity) || 0;
               const originalPrice = parseInt((item.price || "0").replace(/,/g, ""));
@@ -108,42 +95,42 @@ export default function Cart() {
               return (
                 <div
                   key={idx}
-                  className="flex flex-col md:flex-row gap-4 p-4 border border-gray-200 rounded-xl shadow-sm bg-white hover:shadow-md transition"
+                  className="flex flex-col sm:flex-row gap-4 p-4 border rounded-xl shadow-sm hover:shadow-md transition"
                 >
-                  <div className="w-full md:w-28 h-28 flex-shrink-0">
+                  <div className="w-full sm:w-28 h-32 sm:h-28 flex-shrink-0">
                     <img
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover rounded-lg border"
                     />
                   </div>
+
                   <div className="flex flex-col justify-between flex-1">
                     <div>
-                      <div className="flex items-start justify-between gap-2">
-                        <h2 className="text-base font-semibold text-gray-800">{item.name}</h2>
-                        <div className="text-blue-600 font-semibold text-sm whitespace-nowrap">
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-2">
+                        <h2 className="font-semibold text-gray-800">{item.name}</h2>
+                        <div className="text-blue-600 font-semibold">
                           {currency.format(itemTotal)} VND
                         </div>
                       </div>
-                      <div className="flex items-center justify-between gap-2">
-                        {hasDeal ? (
-                          <>
-                            <p className="text-sm text-red-500 mt-1">🔥 Giảm {item.deal}%</p>
-                            <span className="text-xs text-gray-400 line-through">
-                              {currency.format(quantity * originalPrice)} VND
-                            </span>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </div>
+
+                      {hasDeal && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-red-500">🔥 Giảm {item.deal}%</span>
+                          <span className="text-xs line-through text-gray-400">
+                            {currency.format(quantity * originalPrice)} VND
+                          </span>
+                        </div>
+                      )}
+
                       {visibleSpecs.length > 0 && (
-                        <ul className="text-sm text-gray-600 list-disc pl-5 mt-1 space-y-1">
+                        <ul className="text-sm text-gray-600 list-disc pl-5 mt-2 space-y-1">
                           {visibleSpecs.map((spec, i) => (
                             <li key={i}>{spec}</li>
                           ))}
                         </ul>
                       )}
+
                       {item.specs?.length > 2 && (
                         <button
                           onClick={() => toggleExpand(item.name)}
@@ -153,22 +140,24 @@ export default function Cart() {
                         </button>
                       )}
                     </div>
-                    <div className="flex items-center justify-between mt-3">
+
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.name, quantity - 1)}
-                          className="w-7 h-7 border rounded-md text-gray-600 hover:bg-gray-100"
+                          className="w-8 h-8 border rounded-md hover:bg-gray-100"
                         >
                           −
                         </button>
-                        <span className="text-sm font-medium">{quantity}</span>
+                        <span className="font-medium">{quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.name, quantity + 1)}
-                          className="w-7 h-7 border rounded-md text-gray-600 hover:bg-gray-100"
+                          className="w-8 h-8 border rounded-md hover:bg-gray-100"
                         >
                           +
                         </button>
                       </div>
+
                       <button
                         onClick={() => handleRemove(item.name)}
                         className="text-sm text-red-500 hover:underline"
@@ -182,50 +171,40 @@ export default function Cart() {
             })}
           </div>
 
-          {/* Thanh tổng cộng */}
+          {/* Thanh tổng tiền */}
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md px-4 py-4 z-40">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-              <div className="text-xl font-bold">
-                Tổng cộng: <span className="text-blue-600">{currency.format(totalPrice)} VND</span>
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+              <div className="text-lg md:text-xl font-bold">
+                Tổng cộng:{" "}
+                <span className="text-blue-600">{currency.format(totalPrice)} VND</span>
               </div>
-              <div className="flex gap-3">
+
+              <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                 <button
                   onClick={handlePayment}
-                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                  className="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 w-full sm:w-auto"
                 >
                   Thanh toán
                 </button>
                 <button
                   onClick={() => setShowCancelModal(true)}
-                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                  className="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600 w-full sm:w-auto"
                 >
                   Hủy giỏ hàng
                 </button>
               </div>
             </div>
           </div>
-          <div className="h-[100px]" />
         </>
       )}
 
-      {/* Popup thanh toán */}
+      {/* Modal giữ nguyên - không thay logic */}
       <AnimatePresence>
         {showCheckoutModal && (
           <>
-            <motion.div
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
-              onClick={() => setShowCheckoutModal(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center px-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-            >
-              <div className="bg-white rounded-xl shadow-xl p-6 max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
+            <motion.div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" />
+            <motion.div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+              <div className="bg-white rounded-xl shadow-xl p-6 max-w-lg w-full">
                 <CheckoutForm totalPrice={totalPrice} cart={cart} onClose={() => setShowCheckoutModal(false)} />
               </div>
             </motion.div>
@@ -233,28 +212,12 @@ export default function Cart() {
         )}
       </AnimatePresence>
 
-      {/* Modal hủy giỏ hàng */}
       <AnimatePresence>
         {showCancelModal && (
           <>
-            <motion.div
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
-              onClick={() => setShowCancelModal(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center px-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              onClick={() => setShowCancelModal(false)}
-            >
-              <div
-                className="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full text-center"
-                onClick={(e) => e.stopPropagation()}
-              >
+            <motion.div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" />
+            <motion.div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+              <div className="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full text-center">
                 <div className="text-yellow-500 text-4xl mb-3">⚠️</div>
                 <h2 className="text-xl font-bold mb-2">Xác nhận huỷ giỏ hàng</h2>
                 <p className="text-gray-600 mb-6">

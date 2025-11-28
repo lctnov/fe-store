@@ -3,18 +3,31 @@ import menuItems from "@/data/menuItems";
 
 export default function MainMenu() {
   return (
-	<div className="bg-gray-800 text-white border-t-2 w-full px-4 flex justify-between items-center py-0">
-		<div className="w-full px-4 flex justify-between items-center py-3">
+    <div className="bg-gray-800 text-white border-t-2 w-full px-2 sm:px-4">
+      <div
+        className="
+          w-full flex justify-between items-center
+          py-2 sm:py-3
+          overflow-x-auto 
+          scrollbar-hide
+        "
+      >
         {menuItems.map((item, index) => {
           const Icon = item.icon;
           return (
             <Link
               key={index}
               href={item.href}
-              className="flex items-center space-x-2 hover:text-red-500 transition"
+              className="
+                flex flex-col sm:flex-row items-center 
+                sm:space-x-2 text-xs sm:text-sm
+                hover:text-red-500 transition 
+                px-2 sm:px-0
+                min-w-[64px] sm:min-w-fit
+              "
             >
-              <Icon className="w-5 h-5" />
-              <span>{item.label}</span>
+              <Icon className="w-5 h-5 mb-1 sm:mb-0" />
+              <span className="whitespace-nowrap">{item.label}</span>
             </Link>
           );
         })}

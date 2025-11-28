@@ -60,20 +60,20 @@ export default function LaptopCard({ laptop }) {
     return faLaptop;
   };
 
-  // Tính số sao dựa vào số máy bán ra: 2000/10000 => 20% => 1 sao mỗi 20%
   const soldRatio = Number(laptop.sold ?? 0) / Number(laptop.stock ?? 0);
   const autoRating = Math.min(5, Math.max(1, Math.round(soldRatio * 5)));
   const numberStock = Number(laptop.stock - laptop.sold) ?? 0;
+
   return (
-    <div className="relative bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-4 flex flex-col gap-3 text-sm">
+    <div className="relative bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-3 sm:p-4 flex flex-col gap-3 text-sm w-full">
       {hasDeal && (
-        <div className="absolute top-3 left-2 bg-gradient-to-r from-red-500 to-yellow-400 text-white px-3 py-0.5 rounded-full shadow animate-pulse text-xs font-semibold z-10">
+        <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-yellow-400 text-white px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold z-10">
           🔥 -{laptop.deal}%
         </div>
       )}
 
       {(laptop.isHot || laptop.isNew) && (
-        <div className="absolute top-3 right-2 bg-red-600 text-white px-2 py-0.5 text-xs rounded-full shadow z-10">
+        <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-0.5 text-[10px] sm:text-xs rounded-full shadow z-10">
           {laptop.isHot ? "HOT" : laptop.isNew ? "Mới" : ""}
         </div>
       )}
@@ -81,17 +81,17 @@ export default function LaptopCard({ laptop }) {
       <img
         src={laptop.image}
         alt={laptop.name}
-        className="w-full h-64 object-contain p-2 bg-white rounded-lg"
+        className="w-full h-44 sm:h-56 md:h-64 object-contain p-2 rounded-lg bg-white"
       />
 
-      <h2 className="text-base font-semibold text-gray-800 line-clamp-2 min-h-[3rem]">
+      <h2 className="text-sm sm:text-base font-semibold text-gray-800 line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
         {laptop.name}
       </h2>
 
       <ul className="text-gray-600 space-y-1">
         {(laptop.specs || []).map((spec, idx) => (
-          <li key={idx} className="flex items-center gap-2 text-xs">
-            <FontAwesomeIcon icon={getIconForSpec(spec)} className="text-blue-500 w-3.5 h-3.5" />
+          <li key={idx} className="flex items-center gap-2 text-[11px] sm:text-xs">
+            <FontAwesomeIcon icon={getIconForSpec(spec)} className="text-blue-500 w-3 h-3 sm:w-3.5 sm:h-3.5" />
             {spec}
           </li>
         ))}
@@ -100,7 +100,7 @@ export default function LaptopCard({ laptop }) {
       <StarRating value={autoRating} readOnly />
 
       <div className="flex justify-between items-center mt-1">
-        <div className="text-blue-600 font-bold text-sm">
+        <div className="text-blue-600 font-bold text-sm sm:text-[15px]">
           {discountedPrice.toLocaleString("vi-VN")}₫
         </div>
         {hasDeal && (
@@ -110,14 +110,12 @@ export default function LaptopCard({ laptop }) {
         )}
       </div>
 
-      <div className="flex justify-between items-center mt-3 text-sm font-medium">
-        {/* Đã bán */}
-        <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-2 py-1 rounded-full text-xs">
+      <div className="flex justify-between items-center mt-2 text-xs sm:text-sm font-medium">
+        <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-2 py-1 rounded-full">
           🔥 Đã bán: <span className="font-semibold">{laptop.sold} máy</span>
         </div>
 
-        {/* Còn lại */}
-        <div className="flex items-center gap-1 text-green-700 bg-green-100 px-2 py-1 rounded-full text-xs">
+        <div className="flex items-center gap-1 text-green-700 bg-green-100 px-2 py-1 rounded-full">
           📦 Còn lại: <span className="font-semibold">{numberStock} máy</span>
         </div>
       </div>
@@ -125,13 +123,13 @@ export default function LaptopCard({ laptop }) {
       <div className="flex gap-2 mt-2">
         <button
           onClick={handleBuy}
-          className="flex-1 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-sm py-2 rounded-md font-semibold hover:scale-105 transition-transform"
+          className="flex-1 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-xs sm:text-sm py-2 rounded-md font-semibold hover:scale-105 transition-transform"
         >
           Mua ngay
         </button>
         <Link
           href={`/product/${laptop.slug}`}
-          className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-sm py-2 rounded-md font-semibold text-gray-700 hover:scale-105 transition-transform"
+          className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm py-2 rounded-md font-semibold text-gray-700 hover:scale-105 transition-transform"
         >
           Xem chi tiết
         </Link>
