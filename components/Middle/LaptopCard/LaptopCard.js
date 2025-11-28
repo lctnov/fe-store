@@ -65,29 +65,34 @@ export default function LaptopCard({ laptop }) {
   const numberStock = Number(laptop.stock - laptop.sold) ?? 0;
 
   return (
-    <div className="relative bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-3 sm:p-4 flex flex-col gap-3 text-sm w-full">
+    <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-4 flex flex-col gap-3 text-sm w-full">
+      {/* Deal badge */}
       {hasDeal && (
-        <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-yellow-400 text-white px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold z-10">
+        <div className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-yellow-400 text-white px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold z-10 shadow-md">
           🔥 -{laptop.deal}%
         </div>
       )}
 
+      {/* HOT / New badge */}
       {(laptop.isHot || laptop.isNew) && (
         <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-0.5 text-[10px] sm:text-xs rounded-full shadow z-10">
           {laptop.isHot ? "HOT" : laptop.isNew ? "Mới" : ""}
         </div>
       )}
 
+      {/* Laptop Image */}
       <img
         src={laptop.image}
         alt={laptop.name}
-        className="w-full h-44 sm:h-56 md:h-64 object-contain p-2 rounded-lg bg-white"
+        className="w-full h-44 sm:h-56 md:h-64 object-contain p-2 rounded-lg bg-gray-50 shadow-sm"
       />
 
+      {/* Laptop Name */}
       <h2 className="text-sm sm:text-base font-semibold text-gray-800 line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
         {laptop.name}
       </h2>
 
+      {/* Specs */}
       <ul className="text-gray-600 space-y-1">
         {(laptop.specs || []).map((spec, idx) => (
           <li key={idx} className="flex items-center gap-2 text-[11px] sm:text-xs">
@@ -97,8 +102,10 @@ export default function LaptopCard({ laptop }) {
         ))}
       </ul>
 
-      <StarRating value={autoRating} readOnly />
+      {/* Rating */}
+      {/* <StarRating value={autoRating} readOnly /> */}
 
+      {/* Price */}
       <div className="flex justify-between items-center mt-1">
         <div className="text-blue-600 font-bold text-sm sm:text-[15px]">
           {discountedPrice.toLocaleString("vi-VN")}₫
@@ -110,26 +117,27 @@ export default function LaptopCard({ laptop }) {
         )}
       </div>
 
-      <div className="flex justify-between items-center mt-2 text-xs sm:text-sm font-medium">
-        <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-2 py-1 rounded-full">
-          🔥 Đã bán: <span className="font-semibold">{laptop.sold} máy</span>
+      {/* Sold & Stock info: nằm ngang, không scroll */}
+      <div className="flex justify-between items-center mt-2 gap-2 text-[10px] sm:text-[11px] font-medium">
+        <div className="flex items-center gap-1 text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+          🔥 {laptop.sold} máy
         </div>
-
-        <div className="flex items-center gap-1 text-green-700 bg-green-100 px-2 py-1 rounded-full">
-          📦 Còn lại: <span className="font-semibold">{numberStock} máy</span>
+        <div className="flex items-center gap-1 text-green-700 bg-green-100 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+          📦 {numberStock} máy
         </div>
       </div>
 
-      <div className="flex gap-2 mt-2">
+      {/* Action buttons */}
+      <div className="flex gap-2 mt-3">
         <button
           onClick={handleBuy}
-          className="flex-1 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-xs sm:text-sm py-2 rounded-md font-semibold hover:scale-105 transition-transform"
+          className="flex-1 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-xs sm:text-sm py-2 rounded-lg font-semibold hover:scale-105 transform transition-shadow shadow-md hover:shadow-lg"
         >
           Mua ngay
         </button>
         <Link
           href={`/product/${laptop.slug}`}
-          className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm py-2 rounded-md font-semibold text-gray-700 hover:scale-105 transition-transform"
+          className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm py-2 rounded-lg font-semibold text-gray-700 hover:scale-105 transform transition-shadow shadow-sm"
         >
           Xem chi tiết
         </Link>

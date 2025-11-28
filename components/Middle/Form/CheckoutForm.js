@@ -32,66 +32,75 @@ export default function CheckoutForm({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm p-3">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-3">
       <form
         onSubmit={handleSubmit}
-        className="relative w-full max-w-5xl bg-white rounded-lg shadow-xl p-4 sm:p-6 max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-h-[92vh] overflow-y-auto"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Cột trái - Thông tin khách hàng */}
-          <div className="space-y-4">
-            <h2 className="text-lg sm:text-xl font-bold">Nhập thông tin khách hàng</h2>
+          <div className="space-y-5">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+              Nhập thông tin khách hàng
+            </h2>
 
-            <div>
-              <label className="block text-sm font-medium">
-                Họ và tên <span className="text-red-500">*</span>
-              </label>
-              <input
-                name="name"
-                required
-                onChange={handleChange}
-                className="w-full p-2 border rounded text-sm"
-              />
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Họ và tên <span className="text-red-500">*</span>
+                </label>
+                <input
+                  name="name"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Địa chỉ <span className="text-red-500">*</span>
+                </label>
+                <input
+                  name="address"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Tỉnh / Thành phố <span className="text-red-500">*</span>
+                </label>
+                <input
+                  name="city"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Số điện thoại <span className="text-red-500">*</span>
+                </label>
+                <input
+                  name="phone"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium">
-                Địa chỉ <span className="text-red-500">*</span>
-              </label>
+            <label className="flex items-center space-x-2 text-sm text-gray-700">
               <input
-                name="address"
-                required
+                type="checkbox"
+                name="shipToOther"
                 onChange={handleChange}
-                className="w-full p-2 border rounded text-sm"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium">
-                Tỉnh / Thành phố <span className="text-red-500">*</span>
-              </label>
-              <input
-                name="city"
-                required
-                onChange={handleChange}
-                className="w-full p-2 border rounded text-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium">
-                Số điện thoại <span className="text-red-500">*</span>
-              </label>
-              <input
-                name="phone"
-                required
-                onChange={handleChange}
-                className="w-full p-2 border rounded text-sm"
-              />
-            </div>
-
-            <label className="flex items-center space-x-2 text-sm">
-              <input type="checkbox" name="shipToOther" onChange={handleChange} />
               <span>Giao hàng tới địa chỉ khác?</span>
             </label>
 
@@ -99,49 +108,58 @@ export default function CheckoutForm({ onClose }) {
               name="note"
               placeholder="Ghi chú đơn hàng: Quà tặng, VAT..."
               onChange={handleChange}
-              className="w-full p-2 border rounded text-sm"
+              className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
             />
 
-            <div className="text-sm">
-              <h3 className="font-semibold mb-1">Chọn cách nhận hàng</h3>
-              <label className="flex items-center">
+            <div className="text-sm space-y-2">
+              <h3 className="font-semibold text-gray-700">Chọn cách nhận hàng</h3>
+              <label className="flex items-center space-x-2">
                 <input
                   type="radio"
                   name="method"
                   value="pickup"
                   checked={form.method === "pickup"}
                   onChange={handleChange}
+                  className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-2 focus:ring-blue-500"
                 />
-                <span className="ml-2">Giữ hàng tại cửa hàng</span>
+                <span>Giữ hàng tại cửa hàng</span>
               </label>
-              <label className="flex items-center mt-1">
+              <label className="flex items-center space-x-2">
                 <input
                   type="radio"
                   name="method"
                   value="delivery"
                   checked={form.method === "delivery"}
                   onChange={handleChange}
+                  className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-2 focus:ring-blue-500"
                 />
-                <span className="ml-2">Giao hàng tận nơi</span>
+                <span>Giao hàng tận nơi</span>
               </label>
             </div>
 
-            <label className="flex items-center space-x-2 text-sm">
-              <input type="checkbox" name="isHuman" onChange={handleChange} />
+            <label className="flex items-center space-x-2 text-sm text-gray-700">
+              <input
+                type="checkbox"
+                name="isHuman"
+                onChange={handleChange}
+                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
+              />
               <span>Tôi không phải là người máy</span>
             </label>
           </div>
 
           {/* Cột phải - QR Code */}
-          <div className="flex flex-col items-center justify-center text-center border rounded p-4 shadow-sm">
-            <h3 className="font-semibold text-base sm:text-lg mb-3">Thanh toán qua QR Code</h3>
-            <div className="flex items-center justify-center mb-2">
+          <div className="flex flex-col items-center justify-center text-center border border-gray-200 rounded-xl p-6 shadow-sm bg-gray-50">
+            <h3 className="font-semibold text-lg sm:text-xl mb-4 text-gray-800">
+              Thanh toán qua QR Code
+            </h3>
+            <div className="flex items-center justify-center mb-3">
               <Image
                 src="/qrcode/momo.jpg"
                 alt="QR Code thanh toán"
-                width={200}
-                height={200}
-                className="rounded w-40 h-40 sm:w-52 sm:h-52 object-cover"
+                width={220}
+                height={220}
+                className="rounded-xl w-44 h-44 sm:w-52 sm:h-52 object-cover shadow"
               />
             </div>
             <p className="text-xs sm:text-sm text-gray-500">
@@ -151,17 +169,17 @@ export default function CheckoutForm({ onClose }) {
         </div>
 
         {/* Nút */}
-        <div className="pt-4 flex flex-col sm:flex-row justify-between gap-3 sm:gap-4">
+        <div className="pt-6 flex flex-col sm:flex-row justify-between gap-4">
           <button
             type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded text-sm font-semibold w-full sm:w-1/2"
+            className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-sm font-semibold w-full sm:w-1/2 shadow-md transition"
           >
             Xác nhận
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded text-sm font-medium w-full sm:w-1/2"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 rounded-lg text-sm font-medium w-full sm:w-1/2 shadow-sm transition"
           >
             Hủy
           </button>
