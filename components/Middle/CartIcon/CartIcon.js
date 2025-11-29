@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useCart } from "@/hooks/useCart";
-import { Trash2 } from "lucide-react";
+import { ShoppingCart, Trash2 } from "lucide-react";
 
 export default function CartIcon() {
   const { cart, totalItems, cartAnimation, removeFromCart } = useCart();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  // TIMER đóng sau 5 giây khi rê chuột ra
+  const closeTimer = useRef(null);
 
   const totalPrice = cart.reduce(
     (sum, item) =>
@@ -14,6 +17,7 @@ export default function CartIcon() {
     0
   );
 
+  // CLICK OUTSIDE
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -24,6 +28,24 @@ export default function CartIcon() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // TỰ ĐÓNG SAU 5 GIÂY KHI RÊ RA NGOÀI
+  const startCloseTimer = () => {
+    if (window.innerWidth < 768) return; // không áp dụng mobile
+    closeTimer.current = setTimeout(() => {
+      setOpen(false);
+    }, 3000);
+  };
+
+  const cancelCloseTimer = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+
+  // Hủy timer khi mở lại
+  useEffect(() => {
+    if (open) cancelCloseTimer();
+  }, [open]);
+
+  // TỰ ĐÓNG KHI THU NHỎ MÀN HÌNH
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) setOpen(false);
@@ -35,11 +57,20 @@ export default function CartIcon() {
   return (
     <div
       className="relative"
-      onMouseEnter={() => window.innerWidth >= 768 && setOpen(true)}
-      onMouseLeave={() => window.innerWidth >= 768 && setOpen(false)}
       ref={dropdownRef}
+      onMouseEnter={() => {
+        if (window.innerWidth >= 768) {
+          cancelCloseTimer();
+          setOpen(true);
+        }
+      }}
+      onMouseLeave={() => {
+        if (window.innerWidth >= 768) {
+          startCloseTimer();
+        }
+      }}
     >
-      {/* Icon giỏ hàng */}
+      {/* ICON GIỎ HÀNG */}
       <button
         onClick={() => window.innerWidth < 768 && setOpen(!open)}
         className={`relative transition-transform duration-300 ${
@@ -47,31 +78,20 @@ export default function CartIcon() {
         } hover:scale-110`}
         aria-label="Giỏ hàng"
       >
-        <div className="relative">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-9 w-9 text-blue-600 hover:text-blue-800"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-1 5h12l-1-5M9 21h6"
-            />
-          </svg>
+         <div className="relative">
+        <ShoppingCart
+          className="h-9 w-9 text-blue-600 hover:text-blue-800 transition-colors"
+        />
 
-          {totalItems > 0 && (
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shadow-md">
-              {totalItems}
-            </span>
-          )}
-        </div>
+        {totalItems > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shadow-md">
+            {totalItems}
+          </span>
+        )}
+      </div>
       </button>
 
-      {/* Mini Cart */}
+      {/* MINI CART */}
       {open && (
         <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl z-50 overflow-hidden border border-gray-100">
           <div className="p-4 max-h-72 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
@@ -84,6 +104,8 @@ export default function CartIcon() {
                 <div
                   key={idx}
                   className="flex gap-3 items-center p-3 rounded-lg hover:bg-gray-50 transition shadow-sm"
+                  onMouseEnter={cancelCloseTimer}
+                  onMouseLeave={startCloseTimer}
                 >
                   <img
                     src={item.image}
@@ -95,10 +117,15 @@ export default function CartIcon() {
                     <div className="text-sm font-semibold text-gray-800 truncate">
                       {item.name}
                     </div>
+
                     <div className="text-xs text-gray-500 mt-0.5 flex justify-between">
                       <span>SL: {item.quantity}</span>
                       <span className="font-bold text-blue-600">
-                        {(parseInt(item.price.replace(/,/g, "")) * item.quantity).toLocaleString("vi-VN")}₫
+                        {(
+                          parseInt(item.price.replace(/,/g, "")) *
+                          item.quantity
+                        ).toLocaleString("vi-VN")}
+                        ₫
                       </span>
                     </div>
                   </div>
@@ -137,16 +164,25 @@ export default function CartIcon() {
         </div>
       )}
 
-      {/* Animation */}
+      {/* ANIMATION CSS */}
       <style jsx>{`
         .animate-wiggle {
           animation: wiggle 0.4s;
         }
         @keyframes wiggle {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(5deg); }
-          50% { transform: rotate(-5deg); }
-          75% { transform: rotate(5deg); }
+          0%,
+          100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(5deg);
+          }
+          50% {
+            transform: rotate(-5deg);
+          }
+          75% {
+            transform: rotate(5deg);
+          }
         }
       `}</style>
     </div>

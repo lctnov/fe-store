@@ -22,20 +22,22 @@ export default function LaptopDetail() {
 
   const allLaptops = [...laptops, ...otherLaptops];
   const uniqueLaptops = Array.from(new Map(allLaptops.map((item) => [item.slug, item])).values());
-
   const laptop = uniqueLaptops.find((item) => item.slug === slug);
   const selectedVariant = laptop?.variants?.[selectedVariantIndex];
 
   const handleInstallment = () => {
-    toast("❗Chức năng trả góp chưa có phương thức online. Vui lòng tới cửa hàng gần nhất để đăng ký mua sắm.", {
-      icon: "🛍️",
-      style: {
-        border: "1px solid #facc15",
-        padding: "12px 16px",
-        color: "#92400e",
-        backgroundColor: "#fef3c7",
-      },
-    });
+    toast(
+      "❗Chức năng trả góp chưa có phương thức online. Vui lòng tới cửa hàng gần nhất để đăng ký mua sắm.",
+      {
+        icon: "🛍️",
+        style: {
+          border: "1px solid #facc15",
+          padding: "12px 16px",
+          color: "#92400e",
+          backgroundColor: "#fef3c7",
+        },
+      }
+    );
   };
 
   const handleBuyNow = () => {
@@ -81,7 +83,9 @@ export default function LaptopDetail() {
           {/* Variants */}
           {laptop.variants?.length > 0 && (
             <div className="bg-blue-50 border border-blue-300 p-4 rounded-lg">
-              <p className="font-semibold text-blue-700 mb-2 text-sm sm:text-base">💡 Những cấu hình cùng mẫu</p>
+              <p className="font-semibold text-blue-700 mb-2 text-sm sm:text-base">
+                💡 Những cấu hình cùng mẫu
+              </p>
               <div className="flex flex-wrap gap-2">
                 {laptop.variants.map((variant, idx) => (
                   <button
@@ -170,11 +174,37 @@ export default function LaptopDetail() {
         </div>
       )}
 
-      {/* Other Products */}
+      {/* Text Other Products */}
       <div className="flex justify-between items-center mb-6 pt-10">
         <h2 className="text-xl sm:text-2xl font-bold tracking-wide relative inline-block">
-          <span className="bg-gradient-to-r from-red-500 via-yellow-400 to-pink-500 text-transparent bg-clip-text">🔥 Sản phẩm khác</span>
-          <span className="absolute left-0 -bottom-0.5 w-full h-0.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full animate-pulse"></span>
+
+          {/* Text gradient xanh giống nút */}
+          <span
+            className="
+              bg-gradient-to-r 
+              from-[#1d4ed8]    /* Xanh đậm */
+              via-[#3b82f6]    /* Xanh trung */
+              to-[#60a5fa]     /* Xanh nhạt */
+              text-transparent bg-clip-text
+              drop-shadow-[0_0_6px_rgba(59,130,246,0.45)]
+            "
+          >
+            🔥 Sản phẩm khác
+          </span>
+
+          {/* Gạch chân glow xanh kiểu nút */}
+          <span
+            className="
+              absolute left-0 -bottom-0.5 w-full h-0.5 
+              bg-gradient-to-r 
+              from-[#1d4ed8]
+              via-[#3b82f6]
+              to-[#60a5fa]
+              rounded-full animate-pulse
+              shadow-[0_0_10px_2px_rgba(59,130,246,0.5)]
+            "
+          ></span>
+
         </h2>
       </div>
 

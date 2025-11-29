@@ -5,6 +5,7 @@ import CheckoutForm from "@/components/Middle/Form/CheckoutForm";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { Trash2 } from 'lucide-react';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -170,20 +171,10 @@ export default function Cart() {
                         onClick={() => handleRemove(item.name)}
                         className="flex items-center gap-1 text-red-500 hover:text-red-600 font-semibold text-xs sm:text-sm"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M6 2a1 1 0 00-1 1v1H3.5A1.5 1.5 0 002 5.5v1A.5.5 0 002.5 7h15a.5.5 0 00.5-.5v-1A1.5 1.5 0 0016.5 4H15V3a1 1 0 00-1-1H6zm3 5a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                        <Trash2 className="h-5 w-5" />
                         <span className="hidden sm:inline">Xoá</span>
                       </button>
+
                     </div>
                   </div>
                 </div>

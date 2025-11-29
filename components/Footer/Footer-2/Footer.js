@@ -7,38 +7,49 @@ export default function Footer() {
       {/* Thanh tư vấn mua hàng & hỗ trợ kỹ thuật */}
       <div className="py-6 text-gray-900 bg-gradient-to-r from-blue-50 to-white border-b">
         <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row justify-between items-center gap-6 text-center lg:text-left">
-          {/* Cột 1 */}
-          <div className="w-full lg:w-1/3 font-semibold text-blue-900 text-base uppercase tracking-wide">
-            TƯ VẤN - MUA HÀNG
-          </div>
+          {/* Cột 1 - Tư vấn mua hàng */}
+          <div className="w-full lg:w-1/3 font-semibold text-blue-900 text-base uppercase tracking-wide 
+              flex flex-col sm:flex-row sm:flex-nowrap items-center gap-4">
 
-          {/* Cột 2 - Số điện thoại mua hàng */}
-          <div className="w-full lg:w-1/3 flex flex-col sm:flex-row justify-center items-center gap-4">
+            <span className="font-semibold text-blue-900 text-base uppercase whitespace-nowrap">
+              TƯ VẤN - MUA HÀNG
+            </span>
+
             <a
               href="tel:0949033868"
-              className="w-full sm:w-auto text-center font-semibold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+              className="text-center font-semibold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 
+                        rounded-lg shadow-sm transition-all duration-200 hover:shadow-md whitespace-nowrap"
             >
               📞 0949 033 868
             </a>
+
             <a
               href="tel:0344307123"
-              className="w-full sm:w-auto text-center font-semibold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+              className="text-center font-semibold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 
+                        rounded-lg shadow-sm transition-all duration-200 hover:shadow-md whitespace-nowrap"
             >
               📞 0344 307 123
             </a>
+
           </div>
 
-          {/* Cột 3 - Hỗ trợ kỹ thuật */}
-          <div className="w-full lg:w-1/3 flex flex-col sm:flex-row justify-center lg:justify-end items-center gap-4">
-            <span className="font-semibold text-blue-900 text-base uppercase">
-              HỖ TRỢ KỸ THUẬT
+
+          {/* Cột 2 - Hỗ trợ kỹ thuật */}
+          <div className="w-full lg:w-1/3 font-semibold text-blue-900 text-base uppercase tracking-wide 
+              flex flex-col sm:flex-row sm:flex-nowrap items-center gap-4">
+
+            <span className="font-semibold text-blue-900 text-base uppercase whitespace-nowrap">
+              HỔ TRỢ KỸ THUẬT
             </span>
+
             <a
               href="tel:0949033868"
-              className="w-full sm:w-auto text-center font-semibold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+              className="text-center font-semibold bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 
+                        rounded-lg shadow-sm transition-all duration-200 hover:shadow-md whitespace-nowrap"
             >
               📞 0949 033 868
             </a>
+
           </div>
         </div>
       </div>

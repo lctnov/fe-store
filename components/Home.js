@@ -1,46 +1,18 @@
-import Link from "next/link";
 import LaptopCard from "@/components/Middle/LaptopCard/LaptopCard";
-import CartIcon from "@/components/Middle/CartIcon/CartIcon";
 import laptops from "@/data/laptops";
 import brands from "@/data/brands";
 import otherLaptops from "@/data/otherLaptops";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Footer from "@/components/Footer/Footer-2/Footer";
-import Menus from "@/components/Header/Menu/menu";
+import Headers from "@/components/Header/Header-1/header";
 import "swiper/css";
-
+import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
 export default function Home() {
   return (
     <>
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white shadow">
-        <div className="flex flex-wrap items-center justify-between w-full px-3 py-2 gap-2">
-          <Link href="/" className="flex items-center space-x-2 font-bold text-red-600 text-base sm:text-lg">
-            <img src="/logo/logo-1/lg-icon.png" alt="LCT24H LAPTOP" className="h-8 w-auto" />
-            <span className="hidden sm:block">LCT24H LAPTOP</span>
-          </Link>
-
-          <div className="flex-1 max-w-xs sm:max-w-md mx-auto w-full">
-            <input
-              type="text"
-              placeholder="Gõ tên hoặc model máy để tìm!"
-              className="text-black w-full px-3 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div className="flex items-center space-x-3 sm:space-x-4">
-            <div className="text-right hidden sm:block">
-              <div className="text-red-600 font-bold text-sm">0949 033 868</div>
-              <div className="text-xs text-gray-500">Trần Não, P.An Khánh, Q2, HCM</div>
-            </div>
-            <Link href="/cart" className="relative group">
-              <CartIcon />
-            </Link>
-          </div>
-        </div>
-        <Menus />
-      </div>
+      <Headers />
 
       {/* Banner */}
       <div className="bg-white py-2 px-2">
@@ -77,7 +49,7 @@ export default function Home() {
       {/* Danh mục Gaming nổi bật */}
       <div className="bg-white py-4 px-2">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[1, 2, 1, 3].map((img, i) => (
+          {[1, 2, 1, 2].map((img, i) => (
             <div key={i} className="rounded-lg overflow-hidden shadow hover:scale-105 transition-transform">
               <img src={`/categories/category-${img}.jpg`} className="w-full h-full object-cover" />
             </div>
@@ -101,8 +73,23 @@ export default function Home() {
 
       {/* Sản phẩm nổi bật */}
       <div className="bg-white py-6 px-3">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">🔥 Sản phẩm nổi bật</h2>
+		  <h2 className="text-xl sm:text-2xl font-bold tracking-wide relative inline-block">
 
+			{/* Text gradient xanh giống nút */}
+			<span
+				className="
+				bg-gradient-to-r 
+				from-[#1d4ed8]
+				via-[#3b82f6]
+				to-[#60a5fa]
+				text-transparent bg-clip-text
+				drop-shadow-[0_0_6px_rgba(59,130,246,0.45)]
+				"
+			>
+				🔥 Sản phẩm nổi bật
+			</span>
+
+			</h2>
         <Swiper
           modules={[Navigation, Pagination]}
           spaceBetween={16}
@@ -122,7 +109,39 @@ export default function Home() {
           ))}
         </Swiper>
 
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mt-10 mb-4">🔥 Sản phẩm khác</h2>
+		{/* Text Other Products */}
+        <div className="flex justify-between items-center mb-6 pt-10">
+			<h2 className="text-xl sm:text-2xl font-bold tracking-wide relative inline-block">
+
+			{/* Text gradient xanh giống nút */}
+			<span
+				className="
+				bg-gradient-to-r 
+				from-[#1d4ed8]    /* Xanh đậm */
+				via-[#3b82f6]    /* Xanh trung */
+				to-[#60a5fa]     /* Xanh nhạt */
+				text-transparent bg-clip-text
+				drop-shadow-[0_0_6px_rgba(59,130,246,0.45)]
+				"
+			>
+				🔥 Sản phẩm khác
+			</span>
+
+			{/* Gạch chân glow xanh kiểu nút */}
+			<span
+				className="
+				absolute left-0 -bottom-0.5 w-full h-0.5 
+				bg-gradient-to-r 
+				from-[#1d4ed8]
+				via-[#3b82f6]
+				to-[#60a5fa]
+				rounded-full animate-pulse
+				shadow-[0_0_10px_2px_rgba(59,130,246,0.5)]
+				"
+			></span>
+
+			</h2>
+		</div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {otherLaptops.map((laptop, idx) => (
@@ -131,7 +150,9 @@ export default function Home() {
         </div>
       </div>
 
+		<ChatbotWidget />
       <Footer />
+
     </>
   );
 }
